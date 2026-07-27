@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <a href="profile.html" class="btn btn-ghost">Mon profil</a>
+        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Activer le mode clair">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="messages-signed-out" hidden>
+      <div class="container" style="text-align:center;">
+        <h1>Connecte-toi pour voir tes messages</h1>
+        <a href="login.html" class="btn btn-primary" style="margin-top:16px;">Se connecter</a>
+      </div>
+    </section>
+
+    <section class="section" id="messages-app" hidden>
+      <div class="container messages-layout">
+
+        <!-- Liste des conversations -->
+        <aside class="conversations-list">
+          <p class="eyebrow" style="margin-bottom:14px;">Conversations</p>
+          <p class="step-hint" id="conversations-empty" hidden>Pas encore de messages.</p>
+          <div id="conversations-items"></div>
+        </aside>
+
+        <!-- Fil de discussion actif -->
+        <div class="conversation-thread">
+          <p class="step-hint" id="thread-placeholder">Choisis une conversation à gauche pour l'ouvrir.</p>
+
+          <div id="thread-active" hidden style="display:flex; flex-direction:column; height:100%;">
+            <div class="thread-header">
+              <div class="listing-seller-avatar" id="thread-avatar">?</div>
+              <p class="listing-seller-name" id="thread-username">—</p>
+            </div>
+
+            <div class="thread-messages" id="thread-messages"></div>
+
+            <!-- Panneau d'émojis, caché par défaut -->
+            <div class="emoji-panel" id="emoji-panel" hidden></div>
+
+            <!-- Indicateur d'enregistrement vocal en cours -->
+            <div class="recording-indicator" id="recording-indicator" hidden>
+              🔴 Enregistrement… <button type="button" id="btn-cancel-recording">Annuler</button>
+            </div>
+
+            <form class="thread-form" id="thread-form">
+              <button type="button" class="thread-tool-btn" id="btn-emoji" title="Émojis">😊</button>
+              <button type="button" class="thread-tool-btn" id="btn-image" title="Envoyer une photo">📷</button>
+              <input type="file" id="image-input" accept="image/*" hidden>
+              <button type="button" class="thread-tool-btn" id="btn-voice" title="Message vocal">🎤</button>
+              <input type="text" id="thread-input" placeholder="Écris ton message…" autocomplete="off">
+              <button type="submit" class="btn btn-primary" id="btn-send">Envoyer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/messages.js"></script>
+</body>
+</html>

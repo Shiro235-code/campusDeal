@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Articles — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+
+      <nav class="main-nav">
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Articles</button>
+          <div class="nav-dropdown">
+            <a href="articles.html">Tous les articles</a>
+            <a href="articles.html?category=livres">Livres & cours</a>
+            <a href="articles.html?category=electronique">Électronique</a>
+            <a href="articles.html?category=vetements">Vêtements</a>
+            <a href="articles.html?category=mobilier">Mobilier & déco</a>
+            <a href="articles.html?category=fournitures">Fournitures</a>
+            <a href="articles.html?category=divers">Divers</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Profil</button>
+          <div class="nav-dropdown">
+            <a href="profile.html">Mon profil</a>
+            <a href="messages.html">Messages</a>
+            <a href="sell.html">Publier une annonce</a>
+            <a href="profile.html">Mes annonces</a>
+            <a href="index.html" onclick="localStorage.removeItem('campusdeal-session')">Se déconnecter</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Paramètres</button>
+          <div class="nav-dropdown">
+            <button type="button" class="nav-dropdown-action" id="settings-theme-toggle">
+              🌓 Thème : <strong id="settings-theme-label">Sombre</strong>
+            </button>
+            <button type="button" class="nav-dropdown-action" id="settings-textsize-toggle">
+              🔤 Taille du texte : <strong id="settings-textsize-label">Normale</strong>
+            </button>
+            <a href="#" style="opacity:.5; cursor:default;">🌐 Langue (bientôt)</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Aide</button>
+          <div class="nav-dropdown">
+            <a href="#">Centre d'aide</a>
+            <a href="#">Nous contacter</a>
+            <a href="#">Signaler un problème</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <a href="sell.html" class="btn btn-ghost">Vendre</a>
+        <a href="login.html" class="btn btn-ghost">Se connecter</a>
+        <a href="register.html" class="btn btn-primary">Créer un compte</a>
+        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Activer le mode clair">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <a class="page-hero__back" href="index.html">&larr; Retour à l'accueil</a>
+      <span class="eyebrow">Ce que les étudiants proposent</span>
+      <h1 id="articles-title">Tous les articles</h1>
+      <p>Retrouve ici tout ce que les autres étudiants ont publié.</p>
+
+      <form class="hero-search" id="articles-search-form" role="search" style="margin-top:24px;">
+        <input type="text" id="articles-search-input" placeholder="Cherche un livre, un vélo, une console…" aria-label="Rechercher un article">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+      </form>
+    </section>
+
+    <nav class="category-tabs">
+      <div class="container category-tabs-inner" id="category-tabs">
+        <a href="articles.html" data-category="">Tous les articles</a>
+        <a href="articles.html?category=livres" data-category="livres">Livres & cours</a>
+        <a href="articles.html?category=electronique" data-category="electronique">Électronique</a>
+        <a href="articles.html?category=vetements" data-category="vetements">Vêtements</a>
+        <a href="articles.html?category=mobilier" data-category="mobilier">Mobilier & déco</a>
+        <a href="articles.html?category=fournitures" data-category="fournitures">Fournitures</a>
+        <a href="articles.html?category=divers" data-category="divers">Divers</a>
+      </div>
+    </nav>
+
+    <section class="section">
+      <div class="container">
+        <p id="articles-loading" class="step-hint">Chargement des articles…</p>
+        <p id="articles-empty" class="step-hint" hidden>Aucun article ne correspond à ta recherche pour le moment.</p>
+        <div class="listing-grid" id="articles-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <p>&copy; <span id="year"></span> CampusDeal — Fait par et pour les étudiants.</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/header-search.js"></script>
+  <script src="js/articles.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

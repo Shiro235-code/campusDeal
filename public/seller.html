@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil vendeur — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <a href="articles.html" class="btn btn-ghost">← Retour aux articles</a>
+        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Activer le mode clair">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="seller-content" hidden>
+      <div class="container">
+
+        <div class="profile-header">
+          <div class="profile-avatar" id="seller-avatar">
+            <span id="seller-avatar-fallback">?</span>
+            <img id="seller-avatar-img" alt="" hidden>
+          </div>
+          <div style="flex:1;">
+            <h1 id="seller-username">—</h1>
+            <p class="profile-meta" id="seller-meta"></p>
+            <p class="step-hint" id="seller-followers" style="margin-top:6px;"></p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button type="button" class="btn btn-primary" id="btn-follow">S'abonner</button>
+            <button type="button" class="btn btn-ghost" id="btn-message">Message</button>
+          </div>
+        </div>
+
+        <div class="profile-body">
+          <div class="profile-section reveal profile-section--wide">
+            <h2>Ses annonces</h2>
+            <p class="step-hint" id="seller-listings-empty">Aucune annonce publiée pour l'instant.</p>
+            <div class="listing-grid" id="seller-listings-grid"></div>
+          </div>
+
+          <div class="profile-section reveal profile-section--wide">
+            <h2>Commentaires</h2>
+
+            <form id="comment-form" style="margin-bottom:20px;">
+              <div class="form-field">
+                <textarea id="comment-input" rows="2" placeholder="Laisse un commentaire sur ce vendeur…" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Publier le commentaire</button>
+              <p id="comment-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="step-hint" id="comments-empty">Aucun commentaire pour l'instant.</p>
+            <div id="comments-list" style="display:flex; flex-direction:column; gap:14px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="seller-not-found" hidden>
+      <div class="container" style="text-align:center;">
+        <h1>Profil introuvable</h1>
+        <a href="articles.html" class="btn btn-primary" style="margin-top:16px;">Voir les articles</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <p>&copy; <span id="year"></span> CampusDeal — Fait par et pour les étudiants.</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/seller.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créer un compte — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-ghost">Annuler</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="register-section">
+      <div class="register-card">
+
+        <!-- Points de progression : un point par étape, le point courant est mis en avant -->
+        <div class="progress-dots" id="progress-dots">
+          <span class="dot is-active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <form id="register-form" novalidate>
+
+          <!-- ÉTAPE 1 : Nom d'utilisateur -->
+          <div class="form-step is-active" data-step="1">
+            <h1>Choisis ton nom d'utilisateur</h1>
+            <p class="step-hint">C'est ce que les autres étudiants verront sur tes annonces.</p>
+            <div class="form-field">
+              <label for="username">Nom d'utilisateur</label>
+              <input type="text" id="username" name="username" placeholder="ex. steph_campus" required minlength="3">
+            </div>
+          </div>
+
+          <!-- ÉTAPE 2 : Téléphone -->
+          <div class="form-step" data-step="2">
+            <h1>Ton numéro de téléphone</h1>
+            <p class="step-hint">Utilisé pour te contacter et sécuriser ton compte.</p>
+            <div class="form-field">
+              <label for="phone">Numéro de téléphone</label>
+              <input type="tel" id="phone" name="phone" placeholder="ex. 6XX XXX XXX" required>
+            </div>
+          </div>
+
+          <!-- ÉTAPE 3 : Email -->
+          <div class="form-step" data-step="3">
+            <h1>Ton adresse email</h1>
+            <p class="step-hint">On s'en sert pour les notifications et la récupération de compte.</p>
+            <div class="form-field">
+              <label for="email">Adresse email</label>
+              <input type="email" id="email" name="email" placeholder="ton@email.com" required>
+            </div>
+          </div>
+
+          <!-- ÉTAPE 4 : Mot de passe -->
+          <div class="form-step" data-step="4">
+            <h1>Crée un mot de passe</h1>
+            <p class="step-hint">8 caractères minimum.</p>
+            <div class="form-field">
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" name="password" placeholder="8 caractères minimum" required minlength="8">
+            </div>
+            <div class="form-field">
+              <label for="password-confirm">Confirme le mot de passe</label>
+              <input type="password" id="password-confirm" name="passwordConfirm" placeholder="Retape ton mot de passe" required minlength="8">
+            </div>
+          </div>
+
+          <!-- ÉTAPE 5 : Faculté et filière -->
+          <div class="form-step" data-step="5">
+            <h1>Ta faculté et ta filière</h1>
+            <p class="step-hint">Ça aide les autres étudiants à te situer sur le campus.</p>
+            <div class="form-field">
+              <label for="faculty">Faculté</label>
+              <select id="faculty" name="faculty" required>
+                <option value="" disabled selected>Choisis ta faculté</option>
+                <option value="sciences">Faculté des Sciences</option>
+                <option value="lettres">Faculté des Lettres et Sciences Humaines</option>
+                <option value="droit">Faculté de Droit et Sciences Économiques</option>
+                <option value="medecine">Faculté de Médecine</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="major">Filière</label>
+              <input type="text" id="major" name="major" placeholder="ex. Informatique, Économie…" required>
+            </div>
+          </div>
+
+          <!-- ÉTAPE 6 : Photo de profil -->
+          <div class="form-step" data-step="6">
+            <h1>Ajoute une photo de profil</h1>
+            <p class="step-hint">Facultatif — tu pourras toujours l'ajouter plus tard.</p>
+
+            <div class="avatar-picker">
+              <label for="avatar-input" class="avatar-preview" id="avatar-preview">
+                <span id="avatar-placeholder">+</span>
+                <img id="avatar-img" alt="" hidden>
+              </label>
+              <input type="file" id="avatar-input" accept="image/*" hidden>
+              <label for="avatar-input" class="avatar-choose-btn">Choisir une photo</label>
+            </div>
+          </div>
+
+          <!-- Message de retour (succès / erreur) -->
+          <p id="form-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+
+          <!-- Navigation entre les étapes -->
+          <div class="step-nav">
+            <button type="button" id="btn-back" class="btn btn-ghost" hidden>← Retour</button>
+            <button type="button" id="btn-next" class="btn btn-primary">Continuer</button>
+            <button type="submit" id="btn-submit" class="btn btn-primary" hidden>Créer mon compte</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

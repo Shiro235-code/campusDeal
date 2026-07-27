@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon profil — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-ghost">Accueil</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+
+        <!-- Rempli automatiquement par js/profile.js à partir des infos d'inscription -->
+        <div class="profile-header" id="profile-header">
+          <div class="profile-avatar" id="profile-avatar">
+            <span id="profile-avatar-fallback">?</span>
+            <img id="profile-avatar-img" alt="" hidden>
+          </div>
+          <div>
+            <h1 id="profile-username">Chargement…</h1>
+            <p class="profile-meta" id="profile-meta"></p>
+          </div>
+        </div>
+
+        <!-- Message affiché si aucun profil n'est trouvé (personne ne s'est encore inscrit) -->
+        <p id="profile-empty" class="step-hint" hidden>
+          Aucun profil trouvé sur cet appareil. <a href="register.html" style="color:var(--sky-light);">Créer un compte</a>.
+        </p>
+
+        <div class="profile-body" id="profile-body">
+          <div class="profile-section reveal profile-section--wide">
+            <div class="section-heading" style="margin-bottom:16px;">
+              <h2 style="margin:0;">Mes annonces</h2>
+              <a href="sell.html" class="see-all">+ Publier</a>
+            </div>
+            <p class="step-hint" id="listings-empty">Tu n'as encore publié aucun article.</p>
+            <div class="listing-grid" id="my-listings-grid"></div>
+          </div>
+          <div class="profile-section reveal">
+            <h2>Mes achats</h2>
+            <p class="step-hint">Aucun achat pour le moment.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <p>&copy; <span id="year"></span> CampusDeal — Fait par et pour les étudiants.</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/scroll-effects.js"></script>
+  <script src="js/profile.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

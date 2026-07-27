@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Se connecter — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-ghost">Annuler</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="register-section">
+      <div class="register-card">
+        <h1>Content de te revoir</h1>
+        <p class="step-hint">Connecte-toi pour retrouver tes annonces et tes messages.</p>
+
+        <form id="login-form" novalidate>
+          <div class="form-field">
+            <label for="login-identifier">Email ou numéro de téléphone</label>
+            <input type="text" id="login-identifier" name="identifier" placeholder="ton@email.com" required>
+          </div>
+          <div class="form-field">
+            <label for="login-password">Mot de passe</label>
+            <input type="password" id="login-password" name="password" placeholder="Ton mot de passe" required>
+          </div>
+
+          <p id="login-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+
+          <div class="step-nav">
+            <button type="submit" class="btn btn-primary" style="width:100%;">Se connecter</button>
+          </div>
+        </form>
+
+        <p class="login-switch">
+          Pas encore de compte ? <a href="register.html">Créer un compte</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

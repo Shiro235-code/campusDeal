@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annonce — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <a href="articles.html" class="btn btn-ghost">← Retour aux annonces</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="listing-content" hidden>
+      <div class="container listing-detail-layout">
+
+        <div class="listing-detail-photos">
+          <div class="listing-detail-main-photo" id="listing-main-photo">🛍️</div>
+          <div class="listing-detail-thumbs" id="listing-thumbs"></div>
+        </div>
+
+        <div class="listing-detail-info">
+          <span class="eyebrow" id="listing-category-badge">Catégorie</span>
+          <h1 id="listing-title">Titre de l'annonce</h1>
+          <p class="listing-detail-price" id="listing-price">— FCFA</p>
+
+          <div class="listing-detail-badges">
+            <span class="seller-badge" id="listing-negotiable">Prix fixe</span>
+            <span class="seller-badge" id="listing-condition">État</span>
+          </div>
+
+          <!-- J'aime + S'abonner, côte à côte -->
+          <div style="display:flex; gap:10px; margin-bottom:20px;">
+            <button type="button" class="btn btn-ghost" id="btn-like">🤍 <span id="like-count">0</span> J'aime</button>
+            <button type="button" class="btn btn-primary" id="btn-follow" hidden>S'abonner</button>
+          </div>
+
+          <p class="listing-detail-description" id="listing-description"></p>
+
+          <a href="#" class="listing-seller-card" id="listing-seller-link" style="text-decoration:none;">
+            <div class="listing-seller-avatar" id="listing-seller-avatar">?</div>
+            <div>
+              <p class="listing-seller-name" id="listing-seller-name">Vendeur</p>
+              <span class="seller-badge certified" id="listing-seller-certified" hidden>✓ Certifié étudiant</span>
+            </div>
+          </a>
+
+          <button type="button" class="btn btn-primary" id="btn-contact" style="width:100%;">
+            Contacter le vendeur
+          </button>
+          <p class="step-hint" id="contact-hint" style="margin-top:10px; text-align:center;"></p>
+        </div>
+      </div>
+
+      <!-- Autres annonces du même vendeur -->
+      <div class="container" style="margin-top:56px;">
+        <div class="profile-section reveal profile-section--wide">
+          <div class="section-heading" style="margin-bottom:16px;">
+            <h2 style="margin:0;">Autres annonces de ce vendeur</h2>
+          </div>
+          <p class="step-hint" id="other-listings-empty" hidden>Aucune autre annonce pour l'instant.</p>
+          <div class="listing-grid" id="other-listings-grid"></div>
+        </div>
+
+        <!-- Commentaires sur ce vendeur -->
+        <div class="profile-section reveal profile-section--wide" style="margin-top:20px;">
+          <h2>Commentaires sur ce vendeur</h2>
+
+          <form id="comment-form" style="margin:16px 0 20px;">
+            <div class="form-field">
+              <textarea id="comment-input" rows="2" placeholder="Laisse un commentaire sur ce vendeur…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Publier le commentaire</button>
+            <p id="comment-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+          </form>
+
+          <p class="step-hint" id="comments-empty">Aucun commentaire pour l'instant.</p>
+          <div id="comments-list" style="display:flex; flex-direction:column; gap:14px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="listing-not-found" hidden>
+      <div class="container" style="text-align:center;">
+        <h1>Annonce introuvable</h1>
+        <p class="step-hint">Ce lien ne correspond à aucune annonce disponible.</p>
+        <a href="articles.html" class="btn btn-primary" style="margin-top:16px;">Voir toutes les annonces</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <p>&copy; <span id="year"></span> CampusDeal — Fait par et pour les étudiants.</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/mock-listings.js"></script>
+  <script src="js/listing.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

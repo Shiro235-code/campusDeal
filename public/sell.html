@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publier une annonce — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <a href="profile.html" class="btn btn-ghost">Annuler</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container sell-layout">
+
+        <div class="sell-form-wrap">
+          <div class="section__head">
+            <span class="eyebrow">Nouvelle annonce</span>
+            <h1 class="sell-title">Publie ton article</h1>
+            <p>Remplis les infos ci-dessous — ton annonce sera visible par tous les étudiants.</p>
+          </div>
+
+          <form id="sell-form" novalidate>
+
+            <!-- Photos -->
+            <div class="form-field">
+              <label>Photos (jusqu'à 5)</label>
+              <div class="photo-grid" id="photo-grid">
+                <label class="photo-slot" id="photo-add-slot">
+                  <span>+ Ajouter</span>
+                  <input type="file" id="photo-input" accept="image/*" multiple hidden>
+                </label>
+              </div>
+            </div>
+
+            <!-- Titre -->
+            <div class="form-field">
+              <label for="item-title">Titre de l'annonce</label>
+              <input type="text" id="item-title" name="title" placeholder="ex. Manuel d'Algèbre Linéaire — L2" required maxlength="80">
+            </div>
+
+            <!-- Description -->
+            <div class="form-field">
+              <label for="item-description">Description</label>
+              <textarea id="item-description" name="description" rows="4" placeholder="État de l'article, détails utiles pour l'acheteur…" required></textarea>
+            </div>
+
+            <!-- Catégorie + État -->
+            <div class="form-row">
+              <div class="form-field">
+                <label for="item-category">Catégorie</label>
+                <select id="item-category" name="category" required>
+                  <option value="" disabled selected>Choisis une catégorie</option>
+                  <option value="livres">Livres &amp; cours</option>
+                  <option value="electronique">Électronique</option>
+                  <option value="vetements">Vêtements</option>
+                  <option value="mobilier">Mobilier &amp; déco</option>
+                  <option value="fournitures">Fournitures</option>
+                  <option value="divers">Divers</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="item-condition">État</label>
+                <select id="item-condition" name="condition" required>
+                  <option value="" disabled selected>Choisis l'état</option>
+                  <option value="neuf">Neuf</option>
+                  <option value="tres-bon">Très bon état</option>
+                  <option value="bon">Bon état</option>
+                  <option value="correct">État correct</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Prix -->
+            <div class="form-field">
+              <label for="item-price">Prix (FCFA)</label>
+              <input type="number" id="item-price" name="price" placeholder="ex. 5000" min="0" step="100" required>
+            </div>
+
+            <!-- Prix fixe ou négociable -->
+            <div class="form-field">
+              <label>Ce prix est-il négociable ?</label>
+              <div class="radio-toggle">
+                <label class="radio-option">
+                  <input type="radio" name="negotiable" value="fixed" checked>
+                  <span>Prix fixe</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="negotiable" value="negotiable">
+                  <span>Négociable</span>
+                </label>
+              </div>
+            </div>
+
+            <p id="sell-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+
+            <div class="step-nav">
+              <button type="submit" class="btn btn-primary" style="width:100%;">Publier l'annonce</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Aperçu en direct de l'annonce, mis à jour pendant que tu remplis le formulaire -->
+        <aside class="sell-preview">
+          <p class="eyebrow" style="margin-bottom:14px;">Aperçu</p>
+          <article class="listing-card">
+            <div class="listing-image" id="preview-image">🛍️</div>
+            <div class="listing-body">
+              <p class="listing-price" id="preview-price">— FCFA</p>
+              <h3 class="listing-title" id="preview-title">Titre de ton article</h3>
+              <p class="listing-meta"><span class="seller-badge" id="preview-negotiable">Prix fixe</span></p>
+            </div>
+          </article>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/sell.js"></script>
+</body>
+</html>

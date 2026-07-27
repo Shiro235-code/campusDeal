@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDeal — Le marché entre étudiants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <!-- ===== EN-TÊTE ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+
+      <nav class="main-nav">
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Articles</button>
+          <div class="nav-dropdown">
+            <a href="articles.html">Tous les articles</a>
+            <a href="articles.html?category=livres">Livres &amp; cours</a>
+            <a href="articles.html?category=electronique">Électronique</a>
+            <a href="articles.html?category=vetements">Vêtements</a>
+            <a href="articles.html?category=mobilier">Mobilier &amp; déco</a>
+            <a href="articles.html?category=fournitures">Fournitures</a>
+            <a href="articles.html?category=divers">Divers</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Recherche</button>
+          <div class="nav-dropdown nav-dropdown--search">
+            <form class="nav-search-form" role="search">
+              <input type="text" placeholder="Rechercher un article…" aria-label="Rechercher">
+              <button type="submit" class="btn btn-primary">OK</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Profil</button>
+          <div class="nav-dropdown">
+            <a href="profile.html">Mon profil</a>
+            <a href="messages.html">Messages</a>
+            <a href="sell.html">Publier une annonce</a>
+            <a href="profile.html">Mes annonces</a>
+            <a href="profile.html">Mes achats</a>
+            <a href="index.html" onclick="localStorage.removeItem('campusdeal-session')">Se déconnecter</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Paramètres</button>
+          <div class="nav-dropdown">
+            <button type="button" class="nav-dropdown-action" id="settings-theme-toggle">
+              🌓 Thème : <strong id="settings-theme-label">Sombre</strong>
+            </button>
+            <button type="button" class="nav-dropdown-action" id="settings-textsize-toggle">
+              🔤 Taille du texte : <strong id="settings-textsize-label">Normale</strong>
+            </button>
+            <a href="#" style="opacity:.5; cursor:default;">🌐 Langue (bientôt)</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-trigger" type="button">Aide</button>
+          <div class="nav-dropdown">
+            <a href="#">Centre d'aide</a>
+            <a href="#">Nous contacter</a>
+            <a href="#">Signaler un problème</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <a href="sell.html" class="btn btn-ghost">Vendre</a>
+        <a href="login.html" class="btn btn-ghost">Se connecter</a>
+        <a href="register.html" class="btn btn-primary">Créer un compte</a>
+        <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Activer le mode clair">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== HERO — image de l'entrée du campus, fixe en arrière-plan ===== -->
+    <section class="hero">
+      <div class="hero-bg-wrap">
+        <div class="hero-bg"></div>
+        <div class="hero-bg-overlay"></div>
+      </div>
+
+      <div class="hero-inner">
+        <p class="eyebrow">LE MARKETPLACE PENSÉ POUR LE CAMPUS</p>
+        <h1>Achète et vends entre <em>étudiants</em>, sans quitter ton campus.</h1>
+        <p class="hero-subtitle">
+          Livres, électronique, vêtements, mobilier de chambre&nbsp;: publie en 2&nbsp;minutes,
+          négocie par message, paie et retrouve l'acheteur en toute simplicité.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== C'EST QUOI CAMPUSDEAL ===== -->
+    <section class="section reveal">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">Le concept</span>
+          <h2>Un marché entre étudiants, tout simplement</h2>
+          <p>
+            CampusDeal, c'est l'endroit où tu vends ce dont tu n'as plus besoin et où tu trouves ce qu'il te faut,
+            directement entre étudiants. Livres de cours, électronique, vêtements, mobilier de chambre :
+            si ça se vend sur un campus, ça a sa place ici.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMMENT S'Y PRENDRE ===== -->
+    <section class="section reveal" id="comment-ca-marche">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">Simple et rapide</span>
+          <h2>Comment s'y prendre</h2>
+        </div>
+        <div class="steps-grid">
+          <div class="step">
+            <span class="step__num">1</span>
+            <h3>Publie ton article</h3>
+            <p>Ajoute des photos, fixe ton prix (fixe ou négociable) et choisis une catégorie.</p>
+          </div>
+          <div class="step">
+            <span class="step__num">2</span>
+            <h3>Discute et confirme</h3>
+            <p>Échange directement avec l'acheteur ou le vendeur dans la messagerie intégrée.</p>
+          </div>
+          <div class="step">
+            <span class="step__num">3</span>
+            <h3>Retrouvez-vous</h3>
+            <p>Partagez votre position pour un point de rencontre simple et sécurisé.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <p>&copy; <span id="year"></span> CampusDeal — Fait par et pour les étudiants.</p>
+    </div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/header-search.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/scroll-effects.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
