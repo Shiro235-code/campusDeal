@@ -81,6 +81,56 @@ router.post("/listings", (req, res) => {
   res.json({ success: true, message: "Annonce publiée.", listingId: info.lastInsertRowid });
 });
 
+// PUT /api/listings/:id — modifier une annonce existante (seul le vendeur peut le faire)
+router.put("/listings/:id", (req, res) => {
+  const listingId = req.params.id;
+  const { sellerId, title, description, category, condition, price, negotiable, photos } = req.body;
+
+  const existing = db.prepare("SELECT * FROM listings WHERE id = ?").get(listingId);
+  if (!existing) {
+    return res.status(404).json({ success: false, message: "Annonce introuvable." });
+  }
+  if (!sellerId || String(existing.seller_id) !== String(sellerId)) {
+    return res.status(403).json({ success: false, message: "Tu ne peux modifier que tes propres annonces." });
+  }
+  if (!title || !category || !condition || !price) {
+    return res.status(422).json({ success: false, message: "Merci de remplir tous les champs obligatoires." });
+  }
+
+  db.prepare(`
+    UPDATE listings
+    SET title = ?, description = ?, category = ?, condition = ?, price = ?, negotiable = ?, photos = ?
+    WHERE id = ?
+  `).run(
+    title, description || "", category, condition, price,
+    negotiable ? 1 : 0,
+    JSON.stringify(photos || []),
+    listingId
+  );
+
+  res.json({ success: true, message: "Annonce mise à jour." });
+});
+
+// DELETE /api/listings/:id  { sellerId }  — supprimer une annonce (seul le vendeur peut le faire)
+router.delete("/listings/:id", (req, res) => {
+  const listingId = req.params.id;
+  const sellerId = req.body.sellerId;
+
+  const existing = db.prepare("SELECT * FROM listings WHERE id = ?").get(listingId);
+  if (!existing) {
+    return res.status(404).json({ success: false, message: "Annonce introuvable." });
+  }
+  if (!sellerId || String(existing.seller_id) !== String(sellerId)) {
+    return res.status(403).json({ success: false, message: "Tu ne peux supprimer que tes propres annonces." });
+  }
+
+  // On supprime aussi les likes rattachés à cette annonce, pour ne pas laisser de données orphelines
+  db.prepare("DELETE FROM likes WHERE listing_id = ?").run(listingId);
+  db.prepare("DELETE FROM listings WHERE id = ?").run(listingId);
+
+  res.json({ success: true, message: "Annonce supprimée." });
+});
+
 // Convertit une ligne brute de la base en objet propre pour le frontend
 function formatListing(row) {
   return {

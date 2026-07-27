@@ -854,3 +854,11 @@ html.text-large{ font-size: 18px; }
   background: var(--danger); border-radius: 50%;
   margin-left: 6px; vertical-align: middle;
 }
+
+/* Boutons Modifier/Supprimer sous une annonce, sur la page profil */
+.listing-owner-actions{
+  display: flex; gap: 8px; margin-top: 8px;
+}
+.listing-owner-actions .btn{
+  flex: 1; padding: 8px 10px; font-size: .8rem;
+}

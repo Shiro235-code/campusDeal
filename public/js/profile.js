@@ -70,11 +70,38 @@
               '<span class="seller-badge">' + (CATEGORY_LABELS[item.category] || item.category) + "</span></p>" +
           "</div>";
 
+        // On enveloppe la carte + les boutons Modifier/Supprimer dans un conteneur commun.
+        // Le lien vers la fiche ne couvre que la carte elle-même, pas les boutons,
+        // pour que cliquer sur "Supprimer" ne t'emmène pas sur la page de l'annonce.
+        var wrap = document.createElement("div");
+
         var link = document.createElement("a");
         link.className = "listing-link";
         link.href = "listing.html?id=" + item.id;
         link.appendChild(card);
-        grid.appendChild(link);
+        wrap.appendChild(link);
+
+        var actions = document.createElement("div");
+        actions.className = "listing-owner-actions";
+        actions.innerHTML =
+          '<a href="sell.html?edit=' + item.id + '" class="btn btn-ghost">Modifier</a>' +
+          '<button type="button" class="btn btn-ghost listing-delete-btn">Supprimer</button>';
+        actions.querySelector(".listing-delete-btn").addEventListener("click", function () {
+          if (!window.confirm('Supprimer définitivement "' + item.title + '" ?')) { return; }
+          fetch(API_BASE + "/listings/" + item.id, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ sellerId: session.id })
+          })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+              if (data.success) { wrap.remove(); }
+              else { alert(data.message || "Suppression impossible."); }
+            });
+        });
+        wrap.appendChild(actions);
+
+        grid.appendChild(wrap);
       });
     })
     .catch(function () {

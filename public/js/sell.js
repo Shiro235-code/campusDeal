@@ -10,6 +10,11 @@
     return;
   }
 
+  // Mode édition si l'URL contient ?edit=123 (id de l'annonce à modifier)
+  var params = new URLSearchParams(window.location.search);
+  var editId = params.get("edit");
+  var isEditMode = !!editId;
+
   var MAX_PHOTOS = 5;
   var photos = [];
 
@@ -18,6 +23,7 @@
   var photoGrid = document.getElementById("photo-grid");
   var photoInput = document.getElementById("photo-input");
   var photoAddSlot = document.getElementById("photo-add-slot");
+  var submitBtn = document.getElementById("submit-btn");
 
   photoInput.addEventListener("change", function () {
     var files = Array.prototype.slice.call(photoInput.files || []);
@@ -53,6 +59,9 @@
   }
 
   var titleInput = document.getElementById("item-title");
+  var descriptionInput = document.getElementById("item-description");
+  var categoryInput = document.getElementById("item-category");
+  var conditionInput = document.getElementById("item-condition");
   var priceInput = document.getElementById("item-price");
   var negotiableRadios = document.querySelectorAll('input[name="negotiable"]');
 
@@ -72,7 +81,38 @@
   priceInput.addEventListener("input", updatePreview);
   negotiableRadios.forEach(function (r) { r.addEventListener("change", updatePreview); });
 
-  /* ---- Soumission : POST vers le vrai serveur ---- */
+  /* ---- Si on est en mode édition, on va chercher l'annonce existante et on pré-remplit tout ---- */
+  if (isEditMode) {
+    document.getElementById("page-eyebrow").textContent = "Modifier l'annonce";
+    document.getElementById("page-title").textContent = "Modifie ton article";
+    document.getElementById("page-subtitle").textContent = "Change ce que tu veux, puis enregistre.";
+    submitBtn.textContent = "Enregistrer les modifications";
+
+    fetch(API_BASE + "/listings/" + editId)
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        var item = data.listing;
+        if (!item || String(item.sellerId) !== String(session.id)) {
+          feedback.className = "form-feedback feedback-error";
+          feedback.textContent = "Tu ne peux modifier que tes propres annonces.";
+          submitBtn.disabled = true;
+          return;
+        }
+
+        titleInput.value = item.title;
+        descriptionInput.value = item.description || "";
+        categoryInput.value = item.category;
+        conditionInput.value = item.condition;
+        priceInput.value = item.price;
+        document.querySelector('input[name="negotiable"][value="' + (item.negotiable ? "negotiable" : "fixed") + '"]').checked = true;
+
+        photos = item.photos || [];
+        renderPhotoGrid();
+        updatePreview();
+      });
+  }
+
+  /* ---- Soumission : POST (nouvelle annonce) ou PUT (modification) ---- */
   form.addEventListener("submit", function (evt) {
     evt.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
@@ -80,19 +120,23 @@
     var payload = {
       sellerId: session.id,
       title: titleInput.value.trim(),
-      description: document.getElementById("item-description").value.trim(),
-      category: document.getElementById("item-category").value,
-      condition: document.getElementById("item-condition").value,
+      description: descriptionInput.value.trim(),
+      category: categoryInput.value,
+      condition: conditionInput.value,
       price: Number(priceInput.value),
       negotiable: document.querySelector('input[name="negotiable"]:checked').value === "negotiable",
       photos: photos
     };
 
     feedback.className = "form-feedback";
-    feedback.textContent = "Publication en cours…";
+    feedback.textContent = isEditMode ? "Enregistrement en cours…" : "Publication en cours…";
+    submitBtn.disabled = true;
 
-    fetch(API_BASE + "/listings", {
-      method: "POST",
+    var url = isEditMode ? API_BASE + "/listings/" + editId : API_BASE + "/listings";
+    var method = isEditMode ? "PUT" : "POST";
+
+    fetch(url, {
+      method: method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
@@ -100,16 +144,19 @@
       .then(function (result) {
         if (!result.ok || !result.data.success) {
           feedback.className = "form-feedback feedback-error";
-          feedback.textContent = result.data.message || "Échec de la publication.";
+          feedback.textContent = result.data.message || "Échec de l'enregistrement.";
+          submitBtn.disabled = false;
           return;
         }
         feedback.className = "form-feedback feedback-success";
-        feedback.textContent = "Annonce publiée !";
-        window.setTimeout(function () { window.location.href = "profile.html"; }, 900);
+        feedback.textContent = isEditMode ? "Annonce mise à jour !" : "Annonce publiée !";
+        var redirectTo = isEditMode ? "listing.html?id=" + editId : "profile.html";
+        window.setTimeout(function () { window.location.href = redirectTo; }, 900);
       })
       .catch(function () {
         feedback.className = "form-feedback feedback-error";
         feedback.textContent = "Impossible de joindre le serveur. Vérifie qu'il est bien lancé (npm start).";
+        submitBtn.disabled = false;
       });
   });
 
