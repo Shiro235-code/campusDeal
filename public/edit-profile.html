@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modifier mon profil — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <a href="profile.html" class="btn btn-ghost">← Mon profil</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="register-section">
+      <div class="register-card" style="max-width:480px;">
+        <h1>Modifier mon profil</h1>
+        <p class="step-hint" style="margin-bottom:24px;">Change tes informations ou ta photo.</p>
+
+        <form id="profile-form">
+          <div class="avatar-picker" style="margin-bottom:20px;">
+            <label for="avatar-input" class="avatar-preview" id="avatar-preview">
+              <span id="avatar-placeholder">+</span>
+              <img id="avatar-img" alt="" hidden>
+            </label>
+            <input type="file" id="avatar-input" accept="image/*" hidden>
+            <label for="avatar-input" class="avatar-choose-btn">Changer la photo</label>
+          </div>
+
+          <div class="form-field">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" required minlength="3">
+          </div>
+
+          <div class="form-field">
+            <label for="faculty">Faculté</label>
+            <select id="faculty">
+              <option value="">Non renseignée</option>
+              <option value="Faculté des Sciences">Faculté des Sciences</option>
+              <option value="Faculté des Lettres et Sciences Humaines">Faculté des Lettres et Sciences Humaines</option>
+              <option value="Faculté de Droit et Sciences Économiques">Faculté de Droit et Sciences Économiques</option>
+              <option value="Faculté de Médecine">Faculté de Médecine</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="major">Filière</label>
+            <input type="text" id="major" placeholder="ex. Informatique, Économie…">
+          </div>
+
+          <p id="profile-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Enregistrer</button>
+        </form>
+      </div>
+
+      <div class="register-card" style="max-width:480px; margin-top:24px;">
+        <h1>Changer mon mot de passe</h1>
+        <p class="step-hint" style="margin-bottom:24px;">Il te faut ton mot de passe actuel pour le modifier.</p>
+
+        <form id="password-form">
+          <div class="form-field">
+            <label for="current-password">Mot de passe actuel</label>
+            <input type="password" id="current-password" required>
+          </div>
+          <div class="form-field">
+            <label for="new-password">Nouveau mot de passe</label>
+            <input type="password" id="new-password" required minlength="8" placeholder="8 caractères minimum">
+          </div>
+          <div class="form-field">
+            <label for="new-password-confirm">Confirme le nouveau mot de passe</label>
+            <input type="password" id="new-password-confirm" required minlength="8">
+          </div>
+
+          <p id="password-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Changer le mot de passe</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/edit-profile.js"></script>
+</body>
+</html>

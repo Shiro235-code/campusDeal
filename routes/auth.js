@@ -64,4 +64,55 @@ router.post("/login", (req, res) => {
   });
 });
 
+// PUT /api/users/:id/profile — modifier pseudo / faculté / filière / photo
+router.put("/users/:id/profile", (req, res) => {
+  const userId = req.params.id;
+  const { username, faculty, major, avatar } = req.body;
+
+  if (!username || !username.trim()) {
+    return res.status(422).json({ success: false, message: "Le pseudo ne peut pas être vide." });
+  }
+
+  // On vérifie que ce pseudo n'est pas déjà pris par QUELQU'UN D'AUTRE
+  const clash = db.prepare("SELECT id FROM users WHERE username = ? AND id != ?").get(username.trim(), userId);
+  if (clash) {
+    return res.status(409).json({ success: false, message: "Ce pseudo est déjà utilisé par un autre compte." });
+  }
+
+  db.prepare(`
+    UPDATE users SET username = ?, faculty = ?, major = ?, avatar = ?
+    WHERE id = ?
+  `).run(username.trim(), faculty || null, major || null, avatar || null, userId);
+
+  const updated = db.prepare("SELECT id, username, faculty, major, avatar, certified FROM users WHERE id = ?").get(userId);
+  res.json({
+    success: true,
+    message: "Profil mis à jour.",
+    user: { ...updated, certified: !!updated.certified }
+  });
+});
+
+// POST /api/users/:id/password — changer de mot de passe (demande l'ancien, par sécurité)
+router.post("/users/:id/password", (req, res) => {
+  const userId = req.params.id;
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword || !newPassword) {
+    return res.status(422).json({ success: false, message: "Merci de remplir les deux champs." });
+  }
+  if (newPassword.length < 8) {
+    return res.status(422).json({ success: false, message: "Le nouveau mot de passe doit contenir au moins 8 caractères." });
+  }
+
+  const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+  if (!user || !bcrypt.compareSync(currentPassword, user.password_hash)) {
+    return res.status(401).json({ success: false, message: "Mot de passe actuel incorrect." });
+  }
+
+  const newHash = bcrypt.hashSync(newPassword, 10);
+  db.prepare("UPDATE users SET password_hash = ? WHERE id = ?").run(newHash, userId);
+
+  res.json({ success: true, message: "Mot de passe mis à jour." });
+});
+
 module.exports = router;
