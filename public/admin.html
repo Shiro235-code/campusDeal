@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration — CampusDeal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Campus<span>Deal</span></a>
+      <div class="header-actions">
+        <span class="eyebrow">Zone administrateur</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Écran de connexion admin, avec la clé définie dans routes/certification.js -->
+    <section class="section" id="admin-login">
+      <div class="container" style="max-width:400px;">
+        <div class="register-card">
+          <h1>Connexion administrateur</h1>
+          <p class="step-hint" style="margin-bottom:20px;">Réservé à la modération des demandes de certification.</p>
+          <form id="admin-login-form">
+            <div class="form-field">
+              <label for="admin-key">Clé d'administration</label>
+              <input type="password" id="admin-key" required>
+            </div>
+            <p id="admin-login-feedback" class="form-feedback"></p>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Se connecter</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tableau de bord, affiché une fois la clé validée -->
+    <section class="section" id="admin-dashboard" hidden>
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">Modération</span>
+          <h1>Demandes de certification en attente</h1>
+        </div>
+        <p class="step-hint" id="requests-empty" hidden>Aucune demande en attente pour l'instant.</p>
+        <div id="requests-list" style="display:flex; flex-direction:column; gap:16px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

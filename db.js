@@ -67,6 +67,17 @@ db.exec(`
     body        TEXT NOT NULL,
     created_at  TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
+
+  CREATE TABLE IF NOT EXISTS certification_requests (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id       INTEGER NOT NULL,
+    proof_type    TEXT NOT NULL,        -- 'email' ou 'id_card'
+    proof_email   TEXT,
+    proof_image   TEXT,
+    status        TEXT NOT NULL DEFAULT 'pending', -- 'pending' | 'approved' | 'rejected'
+    created_at    TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reviewed_at   TEXT
+  );
 `);
 
 // Petites migrations pour ajouter de nouvelles colonnes SANS effacer les données

@@ -85,6 +85,49 @@
           <button type="submit" class="btn btn-primary" style="width:100%;">Changer le mot de passe</button>
         </form>
       </div>
+      <div class="register-card" style="max-width:480px; margin-top:24px;">
+        <h1>Certification étudiante</h1>
+        <p class="step-hint" style="margin-bottom:20px;">
+          Fais vérifier ton statut d'étudiant pour obtenir le badge <strong>✓ Certifié</strong> sur ton profil et tes annonces.
+        </p>
+
+        <div id="certification-status"></div>
+
+        <form id="certification-form" style="margin-top:16px;">
+          <div class="form-field">
+            <label>Type de preuve</label>
+            <div class="radio-toggle">
+              <label class="radio-option">
+                <input type="radio" name="proof-type" value="email" checked>
+                <span>Email universitaire</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="proof-type" value="id_card">
+                <span>Carte d'étudiant</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-field" id="proof-email-field">
+            <label for="proof-email">Ton email universitaire</label>
+            <input type="email" id="proof-email" placeholder="toi@uy1.cm">
+          </div>
+
+          <div class="form-field" id="proof-image-field" hidden>
+            <label>Photo de ta carte d'étudiant</label>
+            <div class="avatar-picker" style="align-items:flex-start;">
+              <label for="proof-image-input" class="photo-slot" style="width:140px; height:100px; aspect-ratio:auto;">
+                <span id="proof-image-placeholder">Choisir une photo</span>
+                <img id="proof-image-preview" alt="" hidden style="width:100%;height:100%;object-fit:cover;">
+              </label>
+              <input type="file" id="proof-image-input" accept="image/*" hidden>
+            </div>
+          </div>
+
+          <p id="certification-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary" id="certification-submit" style="width:100%;">Envoyer ma demande</button>
+        </form>
+      </div>
     </section>
   </main>
 

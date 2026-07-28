@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth");
 const listingsRoutes = require("./routes/listings");
 const socialRoutes = require("./routes/social");
 const messagesRoutes = require("./routes/messages");
+const certificationRoutes = require("./routes/certification");
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +25,7 @@ app.use("/api", authRoutes);
 app.use("/api", listingsRoutes);
 app.use("/api", socialRoutes);
 app.use("/api", messagesRoutes);
+app.use("/api", certificationRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ success: true, message: "Le serveur CampusDeal fonctionne." });

@@ -124,4 +124,88 @@
         passwordFeedback.textContent = "Impossible de joindre le serveur.";
       });
   });
+  /* ---- Certification étudiante ---- */
+  var certStatusEl = document.getElementById("certification-status");
+  var certForm = document.getElementById("certification-form");
+  var certFeedback = document.getElementById("certification-feedback");
+  var certSubmitBtn = document.getElementById("certification-submit");
+  var proofTypeRadios = document.querySelectorAll('input[name="proof-type"]');
+  var proofEmailField = document.getElementById("proof-email-field");
+  var proofImageField = document.getElementById("proof-image-field");
+  var proofImageInput = document.getElementById("proof-image-input");
+  var proofImagePreview = document.getElementById("proof-image-preview");
+  var proofImagePlaceholder = document.getElementById("proof-image-placeholder");
+  var proofImageData = null;
+
+  proofTypeRadios.forEach(function (r) {
+    r.addEventListener("change", function () {
+      var isEmail = document.querySelector('input[name="proof-type"]:checked').value === "email";
+      proofEmailField.hidden = !isEmail;
+      proofImageField.hidden = isEmail;
+    });
+  });
+
+  proofImageInput.addEventListener("change", function () {
+    var file = proofImageInput.files && proofImageInput.files[0];
+    if (!file) { return; }
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      proofImageData = e.target.result;
+      proofImagePreview.src = proofImageData;
+      proofImagePreview.hidden = false;
+      proofImagePlaceholder.hidden = true;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function loadCertificationStatus() {
+    fetch(API_BASE + "/users/" + session.id + "/certification")
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        var request = data.request;
+
+        if (session.certified) {
+          certStatusEl.innerHTML = '<p class="form-feedback feedback-success">✓ Tu es un étudiant certifié.</p>';
+          certForm.hidden = true;
+        } else if (request && request.status === "pending") {
+          certStatusEl.innerHTML = '<p class="step-hint">⏳ Ta demande est en attente de vérification par un administrateur.</p>';
+          certSubmitBtn.textContent = "Renvoyer une nouvelle demande";
+        } else if (request && request.status === "rejected") {
+          certStatusEl.innerHTML = '<p class="form-feedback feedback-error">Ta dernière demande a été refusée. Tu peux en renvoyer une avec une preuve différente.</p>';
+        }
+      });
+  }
+  loadCertificationStatus();
+
+  certForm.addEventListener("submit", function (evt) {
+    evt.preventDefault();
+    var proofType = document.querySelector('input[name="proof-type"]:checked').value;
+
+    var payload = { proofType: proofType };
+    if (proofType === "email") {
+      payload.proofEmail = document.getElementById("proof-email").value.trim();
+    } else {
+      payload.proofImage = proofImageData;
+    }
+
+    certFeedback.className = "form-feedback";
+    certFeedback.textContent = "Envoi en cours…";
+
+    fetch(API_BASE + "/users/" + session.id + "/certification", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (!result.ok || !result.data.success) {
+          certFeedback.className = "form-feedback feedback-error";
+          certFeedback.textContent = result.data.message || "Échec de l'envoi.";
+          return;
+        }
+        certFeedback.className = "form-feedback feedback-success";
+        certFeedback.textContent = "Demande envoyée !";
+        loadCertificationStatus();
+      });
+  });
 })();
