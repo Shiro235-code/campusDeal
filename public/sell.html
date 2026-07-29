@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-theme="dark">
+   <script src="js/space-bg.js"></script>
 
   <header class="site-header">
     <div class="container header-inner">
@@ -86,6 +87,12 @@
             <div class="form-field">
               <label for="item-price">Prix (FCFA)</label>
               <input type="number" id="item-price" name="price" placeholder="ex. 5000" min="0" step="100" required>
+            </div>
+
+            <!-- Quantité disponible -->
+            <div class="form-field">
+              <label for="item-stock">Quantité disponible</label>
+              <input type="number" id="item-stock" name="stockTotal" min="1" step="1" value="1" required>
             </div>
 
             <!-- Prix fixe ou négociable -->

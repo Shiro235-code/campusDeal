@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-theme="dark">
+   <script src="js/space-bg.js"></script>
 
   <header class="site-header">
     <div class="container header-inner">
@@ -43,6 +44,14 @@
         </p>
 
         <div class="profile-body" id="profile-body">
+          <div class="profile-section reveal profile-section--wide">
+            <div class="section-heading" style="margin-bottom:16px;">
+              <h2 style="margin:0;">Demandes d'achat reçues</h2>
+            </div>
+            <p class="step-hint" id="orders-empty">Aucune demande en attente.</p>
+            <div id="orders-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+          </div>
+
           <div class="profile-section reveal profile-section--wide">
             <div class="section-heading" style="margin-bottom:16px;">
               <h2 style="margin:0;">Mes annonces</h2>

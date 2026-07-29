@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-theme="dark">
+   <script src="js/space-bg.js"></script>
 
   <header class="site-header">
     <div class="container header-inner">
@@ -40,10 +41,13 @@
           </div>
 
           <!-- J'aime + S'abonner, côte à côte -->
-          <div style="display:flex; gap:10px; margin-bottom:20px;">
+          <div style="display:flex; gap:10px; margin-bottom:16px;">
             <button type="button" class="btn btn-ghost" id="btn-like">🤍 <span id="like-count">0</span> J'aime</button>
             <button type="button" class="btn btn-primary" id="btn-follow" hidden>S'abonner</button>
           </div>
+
+          <!-- Stock disponible / vendu -->
+          <p class="step-hint" id="stock-info" style="margin-bottom:16px;"></p>
 
           <p class="listing-detail-description" id="listing-description"></p>
 
@@ -54,6 +58,11 @@
               <span class="seller-badge certified" id="listing-seller-certified" hidden>✓ Certifié étudiant</span>
             </div>
           </a>
+
+          <!-- Acheter (réserve l'article, en attente de validation du vendeur) -->
+          <button type="button" class="btn btn-primary" id="btn-buy" style="width:100%; margin-bottom:10px;">
+            Acheter
+          </button>
 
           <button type="button" class="btn btn-primary" id="btn-contact" style="width:100%;">
             Contacter le vendeur

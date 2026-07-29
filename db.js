@@ -78,6 +78,16 @@ db.exec(`
     created_at    TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     reviewed_at   TEXT
   );
+
+  CREATE TABLE IF NOT EXISTS orders (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    listing_id    INTEGER NOT NULL,
+    buyer_id      INTEGER NOT NULL,
+    seller_id     INTEGER NOT NULL,
+    status        TEXT NOT NULL DEFAULT 'pending', -- 'pending' | 'confirmed' | 'cancelled'
+    created_at    TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    confirmed_at  TEXT
+  );
 `);
 
 // Petites migrations pour ajouter de nouvelles colonnes SANS effacer les données
@@ -93,5 +103,9 @@ safeAddColumn("messages", "type TEXT NOT NULL DEFAULT 'text'");   // 'text' | 'i
 safeAddColumn("messages", "attachment TEXT");                      // image/audio en base64
 safeAddColumn("messages", "delivered_at TEXT");                    // quand le destinataire a rafraîchi sa liste
 safeAddColumn("messages", "read_at TEXT");                         // quand le destinataire a ouvert la conversation
+
+safeAddColumn("listings", "stock_total INTEGER NOT NULL DEFAULT 1"); // nombre d'exemplaires mis en vente
+safeAddColumn("listings", "stock_sold INTEGER NOT NULL DEFAULT 0");  // nombre déjà vendus (validés par le vendeur)
+safeAddColumn("listings", "status TEXT NOT NULL DEFAULT 'active'");  // 'active' | 'sold_out' | 'archived'
 
 module.exports = db;

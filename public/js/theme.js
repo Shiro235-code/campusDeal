@@ -44,22 +44,23 @@
     syncSettingsLabels();
   }
 
-  /* ---- Boutons du menu "Paramètres" (présents seulement sur certaines pages) ---- */
-  var settingsThemeBtn = document.getElementById("settings-theme-toggle");
-  var settingsThemeLabel = document.getElementById("settings-theme-label");
-  var settingsTextSizeBtn = document.getElementById("settings-textsize-toggle");
-  var settingsTextSizeLabel = document.getElementById("settings-textsize-label");
+  /* ---- Boutons du menu "Paramètres" ----
+     On utilise des CLASSES plutôt que des identifiants uniques, pour pouvoir
+     avoir le même bouton à deux endroits (menu desktop ET menu mobile) sans
+     conflit — un id ne peut exister qu'une seule fois par page. */
+  var themeButtons = document.querySelectorAll(".theme-toggle-action");
+  var themeLabels = document.querySelectorAll(".theme-toggle-label");
+  var textSizeButtons = document.querySelectorAll(".textsize-toggle-action");
+  var textSizeLabels = document.querySelectorAll(".textsize-toggle-label");
 
   function syncSettingsLabels() {
-    if (settingsThemeLabel) {
-      settingsThemeLabel.textContent = body.getAttribute("data-theme") === "light" ? "Clair" : "Sombre";
-    }
-    if (settingsTextSizeLabel) {
-      settingsTextSizeLabel.textContent = html.classList.contains("text-large") ? "Grande" : "Normale";
-    }
+    var themeText = body.getAttribute("data-theme") === "light" ? "Clair" : "Sombre";
+    var sizeText = html.classList.contains("text-large") ? "Grande" : "Normale";
+    themeLabels.forEach(function (el) { el.textContent = themeText; });
+    textSizeLabels.forEach(function (el) { el.textContent = sizeText; });
   }
   syncSettingsLabels();
 
-  if (settingsThemeBtn) { settingsThemeBtn.addEventListener("click", toggleTheme); }
-  if (settingsTextSizeBtn) { settingsTextSizeBtn.addEventListener("click", toggleTextSize); }
+  themeButtons.forEach(function (btn) { btn.addEventListener("click", toggleTheme); });
+  textSizeButtons.forEach(function (btn) { btn.addEventListener("click", toggleTextSize); });
 })();

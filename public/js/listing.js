@@ -62,6 +62,48 @@
       sellerLink.style.cursor = "default";
     }
 
+    /* ---- Stock disponible / vendu, et bouton Acheter ---- */
+    var stockInfo = document.getElementById("stock-info");
+    var btnBuy = document.getElementById("btn-buy");
+
+    if (typeof item.stockAvailable === "number") {
+      stockInfo.textContent = item.stockAvailable + " disponible" + (item.stockAvailable > 1 ? "s" : "") +
+        " · " + item.stockSold + " vendu" + (item.stockSold > 1 ? "s" : "");
+    } else {
+      stockInfo.hidden = true; // annonce de démonstration : pas de vraie gestion de stock
+    }
+
+    if (!item.sellerId) {
+      btnBuy.hidden = true;
+    } else if (session && String(item.sellerId) === String(session.id)) {
+      btnBuy.hidden = true; // c'est ma propre annonce
+    } else if (item.stockAvailable <= 0) {
+      btnBuy.disabled = true;
+      btnBuy.textContent = "Épuisé";
+    } else if (item.myPendingOrder) {
+      btnBuy.disabled = true;
+      btnBuy.textContent = "Demande envoyée, en attente du vendeur";
+    } else {
+      btnBuy.addEventListener("click", function () {
+        if (!session) { window.location.href = "login.html"; return; }
+        btnBuy.disabled = true;
+        fetch(API_BASE + "/listings/" + item.id + "/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ buyerId: session.id })
+        })
+          .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+          .then(function (result) {
+            if (!result.ok || !result.data.success) {
+              alert(result.data.message || "Impossible d'envoyer la demande.");
+              btnBuy.disabled = false;
+              return;
+            }
+            btnBuy.textContent = "Demande envoyée, en attente du vendeur";
+          });
+      });
+    }
+
     /* ---- J'aime ---- */
     var likeBtn = document.getElementById("btn-like");
     document.getElementById("like-count").textContent = item.likesCount || 0;

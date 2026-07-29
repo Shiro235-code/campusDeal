@@ -747,16 +747,19 @@ html.text-large{ font-size: 18px; }
 .conversation-thread{
   display: flex; flex-direction: column;
   padding: 0; position: relative;
+  min-height: 0; /* essentiel : sans ça, les enfants flex ne peuvent pas rétrécir correctement */
+  height: 100%;
 }
 #thread-placeholder{ margin: auto; }
 
 .thread-header{
   display: flex; align-items: center; gap: 12px;
   padding: 16px 20px; border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
 .thread-messages{
-  flex: 1; overflow-y: auto; padding: 20px;
+  flex: 1; min-height: 0; overflow-y: auto; padding: 20px;
   display: flex; flex-direction: column; gap: 10px;
 }
 
@@ -790,6 +793,7 @@ html.text-large{ font-size: 18px; }
   display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px;
   padding: 10px 20px; border-top: 1px solid var(--border-color);
   background: var(--surface-2);
+  flex-shrink: 0;
 }
 .emoji-option{
   background: none; border: none; cursor: pointer;
@@ -805,6 +809,7 @@ html.text-large{ font-size: 18px; }
   border-top: 1px solid var(--border-color);
   font-size: .85rem; color: var(--danger);
   animation: pulse-recording 1.4s ease-in-out infinite;
+  flex-shrink: 0;
 }
 .recording-indicator button{
   background: none; border: 1px solid var(--border-color); color: var(--text-secondary);
@@ -834,6 +839,7 @@ html.text-large{ font-size: 18px; }
 .thread-form{
   display: flex; align-items: center; gap: 6px; padding: 12px 20px;
   border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 .thread-form input{
   flex: 1; background: var(--surface-2); border: 1px solid var(--border-color);
@@ -861,4 +867,96 @@ html.text-large{ font-size: 18px; }
 }
 .listing-owner-actions .btn{
   flex: 1; padding: 8px 10px; font-size: .8rem;
+}
+
+/* Barre de filtres avancés sur articles.html */
+.filters-bar{
+  display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap;
+  padding: 18px; background: var(--surface); border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+.filter-field{ display: flex; flex-direction: column; gap: 6px; min-width: 140px; }
+.filter-field label{ font-size: .78rem; color: var(--text-secondary); font-weight: 600; }
+.filter-field input, .filter-field select{
+  background: var(--surface-2); border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm); padding: 9px 12px;
+  color: var(--text-primary); font-family: var(--font-body); font-size: .88rem;
+  outline: none;
+}
+.filter-field input:focus, .filter-field select:focus{ border-color: var(--sky); }
+
+@media (max-width: 640px){
+  .filters-bar{ flex-direction: column; align-items: stretch; }
+  .filter-field{ min-width: 0; }
+}
+
+/* Fond animé "espace fluide" (js/space-bg.js) — toujours tout au fond,
+   derrière l'image du hero de l'accueil et tout le contenu du site. */
+#space-bg-canvas{ z-index: -6 !important; }
+
+/* =========================================================
+   MENU MOBILE (hamburger)
+   ========================================================= */
+.mobile-menu-toggle{
+  display: none;
+  align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid var(--border-color); background: var(--surface);
+  color: var(--text-secondary); cursor: pointer;
+}
+.mobile-menu-toggle svg{ width: 18px; height: 18px; }
+
+.mobile-menu{
+  display: none;
+  flex-direction: column; gap: 2px;
+  background: var(--surface-solid);
+  border-bottom: 1px solid var(--border-color);
+  padding: 14px;
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+}
+.mobile-menu.is-open{ display: flex; }
+.mobile-menu a{
+  padding: 11px 12px; border-radius: var(--radius-sm);
+  font-size: .92rem; color: var(--text-secondary);
+}
+.mobile-menu a:hover{ background: var(--surface); color: var(--sky-light); }
+.mobile-menu-section-label{
+  font-family: var(--font-mono); font-size: .7rem; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--text-tertiary); padding: 10px 12px 2px;
+}
+.mobile-menu-divider{ height: 1px; background: var(--border-color); margin: 8px 4px; }
+
+@media (max-width: 860px){
+  .mobile-menu-toggle{ display: flex; }
+}
+
+/* =========================================================
+   CORRECTIONS D'AFFICHAGE MOBILE — profil et messagerie
+   ========================================================= */
+@media (max-width: 640px){
+  /* Le profil (avatar + nom + bouton modifier) passe en colonne au lieu de
+     s'écraser sur une seule ligne trop étroite */
+  .profile-header{
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 14px;
+  }
+  .profile-header .btn{ align-self: stretch; text-align: center; }
+
+  /* Barre d'outils de la messagerie : un peu plus compacte pour laisser
+     de la place au champ de saisie sur petit écran */
+  .thread-form{ padding: 10px 12px; gap: 4px; }
+  .thread-tool-btn{ padding: 6px; font-size: 1.05rem; }
+  #btn-send{ padding: 10px 14px; font-size: .85rem; white-space: nowrap; }
+  .thread-header{ padding: 12px 14px; }
+  .thread-messages{ padding: 14px; }
+  .message-bubble{ max-width: 85%; }
+
+  /* Panneau d'émojis : moins de colonnes pour rester lisible au doigt */
+  .emoji-panel{ grid-template-columns: repeat(6, 1fr); }
+
+  /* Fiche d'annonce : les actions (j'aime/suivre/acheter) tiennent mieux en colonne */
+  .listing-detail-info > div[style*="display:flex"]{ flex-wrap: wrap; }
 }

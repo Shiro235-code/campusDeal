@@ -63,6 +63,7 @@
   var categoryInput = document.getElementById("item-category");
   var conditionInput = document.getElementById("item-condition");
   var priceInput = document.getElementById("item-price");
+  var stockInput = document.getElementById("item-stock");
   var negotiableRadios = document.querySelectorAll('input[name="negotiable"]');
 
   function updatePreview() {
@@ -104,6 +105,7 @@
         categoryInput.value = item.category;
         conditionInput.value = item.condition;
         priceInput.value = item.price;
+        stockInput.value = item.stockTotal || 1;
         document.querySelector('input[name="negotiable"][value="' + (item.negotiable ? "negotiable" : "fixed") + '"]').checked = true;
 
         photos = item.photos || [];
@@ -124,6 +126,7 @@
       category: categoryInput.value,
       condition: conditionInput.value,
       price: Number(priceInput.value),
+      stockTotal: Number(stockInput.value) || 1,
       negotiable: document.querySelector('input[name="negotiable"]:checked').value === "negotiable",
       photos: photos
     };

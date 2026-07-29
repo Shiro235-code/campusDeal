@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-theme="dark">
+  <script src="js/space-bg.js"></script>
 
   <!-- ===== EN-TÊTE ===== -->
   <header class="site-header">
@@ -55,11 +56,11 @@
         <div class="nav-item">
           <button class="nav-trigger" type="button">Paramètres</button>
           <div class="nav-dropdown">
-            <button type="button" class="nav-dropdown-action" id="settings-theme-toggle">
-              🌓 Thème : <strong id="settings-theme-label">Sombre</strong>
+            <button type="button" class="nav-dropdown-action theme-toggle-action">
+              🌓 Thème : <strong class="theme-toggle-label">Sombre</strong>
             </button>
-            <button type="button" class="nav-dropdown-action" id="settings-textsize-toggle">
-              🔤 Taille du texte : <strong id="settings-textsize-label">Normale</strong>
+            <button type="button" class="nav-dropdown-action textsize-toggle-action">
+              🔤 Taille du texte : <strong class="textsize-toggle-label">Normale</strong>
             </button>
             <a href="#" style="opacity:.5; cursor:default;">🌐 Langue (bientôt)</a>
           </div>
@@ -85,8 +86,53 @@
             <path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </button>
+        <button id="mobile-menu-toggle" type="button" class="mobile-menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
     </div>
+
+    <!-- Menu mobile : regroupe tous les liens des menus déroulants du dessus,
+         car ceux-ci ne sont pas pratiques au doigt sur petit écran. -->
+    <nav id="mobile-menu" class="mobile-menu">
+      <a href="sell.html" class="btn btn-ghost" style="text-align:center; margin-bottom:6px;">Vendre</a>
+      <a href="login.html" class="btn btn-ghost" style="text-align:center; margin-bottom:10px;">Se connecter</a>
+      <a href="register.html" class="btn btn-primary" style="text-align:center; margin-bottom:14px;">Créer un compte</a>
+
+      <span class="mobile-menu-section-label">Articles</span>
+      <a href="articles.html">Tous les articles</a>
+      <a href="articles.html?category=livres">Livres &amp; cours</a>
+      <a href="articles.html?category=electronique">Électronique</a>
+      <a href="articles.html?category=vetements">Vêtements</a>
+      <a href="articles.html?category=mobilier">Mobilier &amp; déco</a>
+      <a href="articles.html?category=fournitures">Fournitures</a>
+      <a href="articles.html?category=divers">Divers</a>
+      <div class="mobile-menu-divider"></div>
+
+      <span class="mobile-menu-section-label">Profil</span>
+      <a href="profile.html">Mon profil</a>
+      <a href="messages.html">Messages</a>
+      <a href="sell.html">Publier une annonce</a>
+      <a href="profile.html">Mes annonces</a>
+      <a href="index.html" onclick="localStorage.removeItem('campusdeal-session')">Se déconnecter</a>
+      <div class="mobile-menu-divider"></div>
+
+      <span class="mobile-menu-section-label">Paramètres</span>
+      <button type="button" class="nav-dropdown-action theme-toggle-action">
+        🌓 Thème : <strong class="theme-toggle-label">Sombre</strong>
+      </button>
+      <button type="button" class="nav-dropdown-action textsize-toggle-action">
+        🔤 Taille du texte : <strong class="textsize-toggle-label">Normale</strong>
+      </button>
+      <div class="mobile-menu-divider"></div>
+
+      <span class="mobile-menu-section-label">Aide</span>
+      <a href="#">Centre d'aide</a>
+      <a href="#">Nous contacter</a>
+      <a href="#">Signaler un problème</a>
+    </nav>
   </header>
 
   <main>
@@ -158,6 +204,7 @@
   </footer>
 
   <script src="js/theme.js"></script>
+  <script src="js/mobile-menu.js"></script>
   <script src="js/header-search.js"></script>
   <script src="js/config.js"></script>
   <script src="js/notifications.js"></script>
