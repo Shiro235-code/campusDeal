@@ -41,11 +41,11 @@
    même élément. Ça évite ce bug (bouton ou bloc qui reste visible
    alors que le JavaScript l'a pourtant bien marqué "hidden"). */
 [hidden]{ display: none !important; }
-html{ scroll-behavior: smooth; background: var(--bg); }
+html{ scroll-behavior: smooth; background: transparent; }
 body{
   position: relative;
   min-height: 100vh;
-  background: var(--bg);
+  background: transparent;
   color: var(--text-primary);
   font-family: var(--font-body);
   line-height: 1.55;
@@ -119,9 +119,8 @@ img{ max-width: 100%; display: block; }
 .btn-primary{
   background: linear-gradient(135deg, var(--sky), var(--violet));
   color: #04101F;
-  box-shadow: 0 16px 34px -14px rgba(56,189,248,.55);
 }
-.btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 20px 40px -14px rgba(56,189,248,.65); }
+.btn-primary:hover{ filter: brightness(1.08); }
 
 .btn-ghost{
   background: var(--surface);
